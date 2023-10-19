@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice Generator App</title>
+    <style>
+        :root{
+            --primary-color1: hsl(193, 38%, 86%);
+            --primary-color2: hsl(150, 100%, 66%);
+
+            --secondary-color1: hsl(217, 19%, 38%);
+            --secondary-color2: hsl(217, 19%, 24%);
+            --secondary-color3: hsl(218, 23%, 16%);
+            
+            --advice-font: 28px;
+        }
+
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 800;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body{
+            background: var(--secondary-color3);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main{
+            background: var(--secondary-color2);
+            text-align: center;
+            max-width: 500px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .divider{
+            position: relative;
+            bottom: -40px;
+        }
+
+        .dice{
+            background: var(--primary-color2);
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            bottom: -65px;
+            cursor: pointer;
+            transition: all 0.35s linear;
+        }
+
+        .advice{
+            font-size: 28px;
+            width: 400px;
+        }
+
+        .dice:hover{
+            box-shadow: 0 0 20px var(--primary-color2);
+            transform: scale(1.05);
+        }
+
+        .dice:active{
+            transform: scale(0.99);
+        }
+        .count{
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-color2);
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <p class="count">ADVICE #<span class="AdCount">0</span></p>
+        <p class="advice">"Perseverance always Pays"</p>
+        <!-- <img class="divider" src="/advice-generator-app-main/images/pattern-divider-desktop.svg"> -->
+        <img class="divider" src="./images/pattern-divider-desktop.svg">
+        <div class="dice">
+            <img src="./images/icon-dice.svg">
+            <!-- <img src="/advice-generator-app-main/images/icon-dice.svg"> -->
+        </div>
+    </div>
+    
+
+
+    <script>
+        let getAdvice = document.querySelector(".advice")
+        let adCount = document.querySelector(".AdCount")
+        let advicelLink = "https://api.adviceslip.com/advice"
+        let adviceRequest = document.querySelector(".dice")
+        
+
+        adviceRequest.addEventListener("click", ()=>{
+            async function giveAdvice(){
+            const response = await fetch(advicelLink)
+            let data = await response.json()
+
+            console.log(data)
+            getAdvice.innerHTML = `${'"'+ data.slip.advice + '"' }` 
+            adCount.innerHTML = data.slip.id
+            }
+
+            giveAdvice()
+        })
+        
+
+
+    </script>
+</body>
+</html>
